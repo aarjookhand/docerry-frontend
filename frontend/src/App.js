@@ -1,11 +1,12 @@
 import React from 'react';
 
+import WelcomePage from './views/WelcomePage';
+
 
 function App() {
   return (
     <div className="App">
-      <h1>docerry is currently under production</h1>
-
+      <WelcomePage/>
     </div>
   );
 }
