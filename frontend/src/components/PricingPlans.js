@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function PricingPlans() {
   return (
-    <div className="min-h-screen bg-[#F9FFFF] py-12">
+    <div className="min-h-screen bg-white py-12">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Plans</h2>
         <p className="text-gray-700">Find the plan that works best for your team.</p>

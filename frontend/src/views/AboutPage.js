@@ -4,7 +4,7 @@ import PricingPlans from '../components/PricingPlans'
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#F9FFFF]">
+    <div className="min-h-screen bg-white">
       <PublicNavbar />
       <div className="max-w-4xl mx-auto py-12 px-6 text-center">
         <h1 className="text-4xl font-bold mb-8 text-gray-800">
