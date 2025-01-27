@@ -1,8 +1,9 @@
 import React from "react";
 
-export function ErrorCard({ email, date, name, description }) {
+export function ErrorCard({ email, date, name, description , onClick}) {
     return (
-      <div className="bg-gray-100 px-10 rounded-md shadow-md mb-4">
+      <div className="bg-gray-100 px-10 rounded-md shadow-md mb-4"
+      onClick={onClick}>
         <p className="text-gray-600">
           {email} - Date posted: {date}
         </p>

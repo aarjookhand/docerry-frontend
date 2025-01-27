@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ErrorCard } from "./ErrorCard";
 
 export function ErrorList() {
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +28,10 @@ export function ErrorList() {
     fetchData();
   }, []);
 
+  const handleClick = (id) => {
+    navigate(`/error/${id}`); // Navigate to the detailed error page
+  };
+
   return (
     <div>
       {errors.map((error) => (
@@ -35,6 +41,7 @@ export function ErrorList() {
           date={error.date}
           name={error.name}
           description={error.description}
+          onClick={() => handleClick(error.id)}
         />
       ))}
     </div>

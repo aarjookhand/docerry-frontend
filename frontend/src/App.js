@@ -8,6 +8,7 @@ import SignUpPage from './views/SignUpPage';
 import SignInPage from './views/SignInPage';
 import HomePage from './views/HomePage';
 import CreateErrorPage from './views/CreateErrorPage';
+import DetailedErrorPage from './views/DetailedErrorPage';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/create-error" element={<CreateErrorPage />} />
+          <Route path="/error/:id" element={<DetailedErrorPage />} />
         </Routes>
       </div>
     </Router>
