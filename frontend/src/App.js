@@ -22,8 +22,8 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/create-error" element={<CreateErrorPage />} />
-          <Route path="/error/:id" element={<DetailedErrorPage />} />
+          <Route path="/create-issue" element={<CreateErrorPage />} />
+          <Route path="/issue/:id" element={<DetailedErrorPage />} />
         </Routes>
       </div>
     </Router>

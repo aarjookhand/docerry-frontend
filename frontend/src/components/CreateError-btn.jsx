@@ -5,7 +5,7 @@ export function CreateButton() {
     const navigate = useNavigate();
     
       const handleClick = () => {
-        navigate('/create-error'); 
+        navigate('/create-issue'); 
       };
     
   

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 
 export default function ErrorForm() {
   const [formData, setFormData] = useState({
-    errorName: "",
-    description: "",
-    errorContent: "",
+    issueId: "",
+    userId: 1,  
+    title: "",
+    content: "",
+    solution: "",
+    severity: "",
     affectedComponents: "",
-    severityLevel: "",
     rootCause: "",
-    myApproach: ""
   });
 
   const [isFillingForm, setIsFillingForm] = useState(false);
@@ -25,20 +26,22 @@ export default function ErrorForm() {
   // Save the form data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
      // TODO BACKEND CALL
-      const response = await fetch("", {
+      const response = await fetch("http://localhost:8080/issue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        alert("Error saved successfully!");
+        alert("Issue created successfully!");
         setIsFillingForm(false);
+        console.log(data)
         navigate("/home"); 
       } else {
-        alert("Failed to save the error.");
+        alert("Failed to create the issue.");
       }
     } catch (error) {
       console.error("Error saving data:", error);
@@ -77,28 +80,14 @@ export default function ErrorForm() {
           </label>
           <input
             type="text"
-            name="errorName"
-            value={formData.errorName}
+            name="title"
+            value={formData.title}
             onChange={handleChange}
             className="border w-full rounded-md px-3 py-2"
             required
           />
         </div>
 
-        {/* Description */}
-        <div>
-          <label className="block font-medium text-gray-700">
-            Description <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="border w-full rounded-md px-3 py-2"
-            required
-          />
-        </div>
 
         {/* Error Content */}
         <div>
@@ -106,8 +95,8 @@ export default function ErrorForm() {
             Error Content <span className="text-red-500">*</span>
           </label>
           <textarea
-            name="errorContent"
-            value={formData.errorContent}
+            name="content"
+            value={formData.content}
             onChange={handleChange}
             className="border w-full rounded-md px-3 py-2"
             rows="4"
@@ -137,7 +126,7 @@ export default function ErrorForm() {
           <input
             type="text"
             name="severityLevel"
-            value={formData.severityLevel}
+            value={formData.severity}
             onChange={handleChange}
             className="border w-full rounded-md px-3 py-2"
           />
@@ -161,8 +150,8 @@ export default function ErrorForm() {
             My Approach <span className="text-red-500">*</span>
           </label>
           <textarea
-            name="myApproach"
-            value={formData.myApproach}
+            name="solution"
+            value={formData.solution}
             onChange={handleChange}
             className="border w-full rounded-md px-3 py-2"
             rows="4"
