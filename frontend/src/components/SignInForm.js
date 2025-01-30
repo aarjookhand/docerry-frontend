@@ -15,8 +15,7 @@ export default function SignInForm() {
     const loginData = { email, password };
 
     try {
-      // TODO BACKEND CONNECTION
-      const response = await fetch('', {
+      const response = await fetch("http://localhost:8081/auth/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,8 +24,10 @@ export default function SignInForm() {
       });
 
       if (response.ok) {
-        const data = await response.json(); //parse response data
-        navigate('/dashboard');
+        const data = await response.json(); 
+        const token = data.token; 
+        localStorage.setItem('authToken', token);
+        navigate('/home');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Login failed');
