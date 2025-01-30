@@ -6,18 +6,42 @@ export default function SignUpForm() {
     // state for form fields and error msg
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');  
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(null);
+    const [serverError, setServerError] = useState(false);
+
+    const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$!%*?&#.]{6,}$/;
 
     // handle form submission
     const handleSubmit = async (e) => {
       e.preventDefault(); // prevent reload
 
+      setError(null);
+      setServerError(false);
+
+      
+      if (!passwordRegex.test(password)) {
+        setError(
+          'Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.'
+        );
+        return;
+      }
+
+      
+      if (password !== confirmPassword) {
+        setError('Passwords do not match');
+        return;
+      }
+
+
+      
+
       const signupData = { email, password };
 
       
       try {
-          // TODO BACKEND CONNECTION
-          const response = await fetch('', {
+          const response = await fetch("http://localhost:8081/auth/signup", {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -26,14 +50,16 @@ export default function SignUpForm() {
           });
 
           if (response.ok) {
-            const data = await response.json(); //parse response data
-            navigate('/dashboard');
+            const data = await response.json();
+            const token = data.token; 
+            localStorage.setItem('authToken', token);
+            navigate('/home');
           } else {
             const errorData = await response.json();
             setError(errorData.message || 'Registration failed');
           }
         } catch (error) {
-          setError('Something went wrong. Please try again.');
+          setServerError(true); 
         }
       };
 
@@ -70,7 +96,24 @@ export default function SignUpForm() {
                 required
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                CONFIRM PASSWORD
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full p-2 bg-gray-100 rounded"
+                required
+              />
+            </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
+            {serverError && (
+              <p className="text-red-500 text-sm">
+                Something went wrong. Please try again later.
+              </p>
+            )}
             <button
               type="submit"
               className="w-full bg-black text-white py-2 rounded font-medium"

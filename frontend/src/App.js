@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoute from "../src/routes/PrivateRoute"
+import PublicRoute from "../src/routes/PublicRoute"
+
 
 import WelcomePage from './views/WelcomePage';
 import AboutPage from './views/AboutPage';
@@ -13,21 +16,28 @@ import ProfilePage from './views/ProfilePage';
 import UpdateErrorPage from './views/UpdateErrorPage';
 
 
+
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signin" element={<SignInPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/create-issue" element={<CreateErrorPage />} />
-          <Route path="/issue/:id" element={<DetailedErrorPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/update-issue/:issueId" element={<UpdateErrorPage />} />
+            <Route element={<PublicRoute />}>
+                <Route path="/" element={<WelcomePage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/signin" element={<SignInPage />} />        
+            </Route>
+
+             <Route element={<PrivateRoute />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/create-issue" element={<CreateErrorPage />} />
+                <Route path="/issue/:id" element={<DetailedErrorPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/update-issue/:issueId" element={<UpdateErrorPage />} />
+            </Route>
+
         </Routes>
       </div>
     </Router>

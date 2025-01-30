@@ -9,10 +9,12 @@ export default function App() {
     <div className="min-h-screen bg-white">
         <PrivateNavbar/>    
     <div className="p-4 max-w-screen-lg mx-auto">
-      <div className="flex justify-center items-center mb-4 gap-x-10">
-        <SearchBar />
-        <CreateButton />
-      </div>
+        <div className="flex justify-center items-center mb-4">
+          <CreateButton />        
+        </div>
+        <div className="flex justify-center items-center mb-4">
+          <SearchBar />        
+        </div>
       <ErrorList />
     </div>
     </div>
