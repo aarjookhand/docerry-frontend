@@ -9,6 +9,8 @@ import SignInPage from './views/SignInPage';
 import HomePage from './views/HomePage';
 import CreateErrorPage from './views/CreateErrorPage';
 import DetailedErrorPage from './views/DetailedErrorPage';
+import ProfilePage from './views/ProfilePage';
+import UpdateErrorPage from './views/UpdateErrorPage';
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/create-issue" element={<CreateErrorPage />} />
           <Route path="/issue/:id" element={<DetailedErrorPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/update-issue/:issueId" element={<UpdateErrorPage />} />
         </Routes>
       </div>
     </Router>
