@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { data, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function ErrorForm() {
   const [formData, setFormData] = useState({
     issueId: "",
-    userId: 1,  
+    userId: "",  
     title: "",
     content: "",
     solution: "",
@@ -17,6 +18,27 @@ export default function ErrorForm() {
   const navigate = useNavigate();
 
 
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem('authToken'); 
+    console.log(token)
+    if (token) {
+      const decodedToken = jwtDecode(token); 
+      console.log(decodedToken)
+      return decodedToken.userId; 
+    }
+    return null; 
+  };
+
+  useEffect(() => {
+    const userId = getUserIdFromToken();
+    if (userId) {
+      setFormData((prevData) => ({
+        ...prevData,
+        userId: userId,  
+      }));
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -28,7 +50,6 @@ export default function ErrorForm() {
     e.preventDefault();
 
     try {
-     // TODO BACKEND CALL
       const response = await fetch("http://localhost:8080/issue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
