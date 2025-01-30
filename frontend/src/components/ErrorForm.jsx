@@ -1,6 +1,6 @@
 import React, { useState, useEffect  } from "react";
 import { data, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import authService  from "../services/authService";
 
 export default function ErrorForm() {
   const [formData, setFormData] = useState({
@@ -18,19 +18,8 @@ export default function ErrorForm() {
   const navigate = useNavigate();
 
 
-  const getUserIdFromToken = () => {
-    const token = localStorage.getItem('authToken'); 
-    console.log(token)
-    if (token) {
-      const decodedToken = jwtDecode(token); 
-      console.log(decodedToken)
-      return decodedToken.userId; 
-    }
-    return null; 
-  };
-
   useEffect(() => {
-    const userId = getUserIdFromToken();
+    const userId = authService.getUserIdFromToken();
     if (userId) {
       setFormData((prevData) => ({
         ...prevData,
