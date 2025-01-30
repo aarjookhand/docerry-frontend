@@ -11,7 +11,7 @@ export default function SignUpForm() {
     const [serverError, setServerError] = useState(false);
 
     const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$!%*?&#.]{6,}$/;
 
     // handle form submission
     const handleSubmit = async (e) => {
@@ -41,8 +41,7 @@ export default function SignUpForm() {
 
       
       try {
-          // TODO BACKEND CONNECTION
-          const response = await fetch('', {
+          const response = await fetch("http://localhost:8081/auth/signup", {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -51,14 +50,16 @@ export default function SignUpForm() {
           });
 
           if (response.ok) {
-            const data = await response.json(); // parse response data
-            navigate('/dashboard');
+            const data = await response.json();
+            const token = data.token; 
+            localStorage.setItem('authToken', token);
+            navigate('/home');
           } else {
             const errorData = await response.json();
             setError(errorData.message || 'Registration failed');
           }
         } catch (error) {
-          setServerError(true); // server error state on failure
+          setServerError(true); 
         }
       };
 
