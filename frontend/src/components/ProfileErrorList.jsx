@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorCard } from "./ErrorCard";
+import authService  from "../services/authService";
 
 export function ProfileErrorList() {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   
-  // TODO 
-  const loggedInUserId = localStorage.getItem("userId"); 
+  const loggedInUserId = authService .getUserIdFromToken();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // TODO 
         const response = await fetch("http://localhost:8080/issue");
         const data = await response.json();
         setErrors(data);

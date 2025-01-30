@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import authService from "../services/authService"
 
 export default function UpdateErrorForm() {
   
@@ -14,8 +15,12 @@ export default function UpdateErrorForm() {
     rootCause: "",
   });
 
+  const loggedInUserId = authService.getUserIdFromToken();
+
   const { issueId } = useParams();
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +28,11 @@ export default function UpdateErrorForm() {
         const response = await fetch(`http://localhost:8080/issue/${issueId}`);
         if (response.ok) {
           const data = await response.json();
+          if (data.userId !== loggedInUserId) {
+            alert("You are not authorized to update this issue.");
+            navigate("/profile");
+            return;
+          }
           setFormData(data); 
           console.log(data)
         } else {
