@@ -27,7 +27,7 @@ export default function SignInForm() {
         const data = await response.json(); 
         const token = data.token; 
         localStorage.setItem('authToken', token);
-        navigate('/dashboard');
+        navigate('/home');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Login failed');
