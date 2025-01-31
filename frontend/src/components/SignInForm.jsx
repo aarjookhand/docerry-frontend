@@ -43,7 +43,7 @@ export default function SignInForm() {
 
   return (
     <div className="max-w-md w-full p-8">
-      <h2 className="text-2xl font-bold mb-6">Welcome back ! 👋</h2>
+      <h2 className="text-2xl font-bold mb-6">Welcome back team ! 👋</h2>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
