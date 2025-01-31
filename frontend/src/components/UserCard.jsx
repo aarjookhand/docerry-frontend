@@ -15,7 +15,7 @@ export default function UserCard() {
     const fetchUserData = async () => {
       try {
         // TODO BACKEND CALL
-        const response = await fetch("");
+        const response = await fetch(`http://localhost:8082/user/${userId}`);
         const data = await response.json();
         setUserData(data);
       } catch (error) {
@@ -36,7 +36,7 @@ export default function UserCard() {
 
     try {
       // TODO BACKEND CALL
-      const response = await fetch(``, {
+      const response = await fetch(`http://localhost:8082/user/pwdreset/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(passwordData),
@@ -61,17 +61,17 @@ export default function UserCard() {
     <div className="max-w-sm p-6 bg-white rounded-2xl shadow-md flex items-start justify-between">
       <div>
         <p className="text-lg font-semibold text-gray-600 mt-2">
-          {userData.email}
+          {userData.user.email}
         </p>
         <p className="text-sm text-gray-600 mt-1">
-          <span className="font-medium">Since</span> {new Date(userData.dateJoined).toLocaleDateString()}
-        </p>
-        <p className="text-sm text-gray-600 mt-1">
-          <span className="font-medium">Scored Points:</span> {userData.scoredPoints}
+          <span className="font-medium">Scored Points:</span> {userData.user.score}
         </p>
       </div>
 
-      <button className="flex items-center text-gray-400 hover:text-black">
+      <button
+        className="flex items-center text-gray-400 hover:text-black"
+        onClick={() => setShowPasswordForm(true)} // Added onClick event here
+      >
         <Edit3 size={18} className="mr-1" />
       </button>
 
