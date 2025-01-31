@@ -109,18 +109,28 @@ export default function PrivateNavbar() {
         </div>
       )}
 
-{showLogoutModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Confirm Logout</h2>
-            <p>Are you sure you want to log out?</p>
-            <div className="mt-4 flex justify-end space-x-4">
-              <button className="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded" onClick={() => setShowLogoutModal(false)}>Cancel</button>
-              <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" onClick={logout}>Logout</button>
-            </div>
+    {showLogoutModal && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+        <div className="bg-white text-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+          <h2 className="text-xl font-semibold mb-4 text-center text-black">Confirm Logout</h2>
+          <p className="text-black text-center mb-6">Are you sure you want to log out?</p>
+          <div className="flex justify-between space-x-4">
+            <button
+              className="bg-gray-600 hover:bg-gray-500 text-white px-6 py-2 rounded transition duration-300 ease-in-out"
+              onClick={() => setShowLogoutModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded transition duration-300 ease-in-out"
+              onClick={logout}
+            >
+              Logout
+            </button>
           </div>
         </div>
-      )}
+      </div>
+    )}
 
     </nav>
   );

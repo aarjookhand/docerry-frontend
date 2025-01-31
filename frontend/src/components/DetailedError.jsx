@@ -31,48 +31,51 @@ export default function DetailedError() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg">
+    <div className="bg-gray-200 text-white p-6 rounded-lg shadow-lg max-w-3xl mx-auto">
       <button
-        className="text-sm bg-gray-200 px-4 py-2 rounded-md mb-4 hover:bg-gray-300"
+        className="text-sm bg-gray-700 px-4 py-2 rounded-md mb-6 hover:bg-gray-600 transition"
         onClick={handleGoBack}
       >
         &larr; Go Back
       </button>
   
-      <h3 className="text-2xl font-semibold text-gray-800 mb-4">{error.title}</h3>
-      <p className="text-gray-600 text-sm mb-2">
+      <h3 className="text-3xl font-semibold text-black mb-4">{error.title}</h3>
+      <p className="text-gray-400 text-sm mb-4">
         <span className="italic">{new Date(error.createdAt).toLocaleDateString()}</span>
       </p>
   
-      <div className="space-y-4">
+      <div className="space-y-6">
         {error.content && (
-          <div>
-            <h4 className="text-lg font-medium text-gray-800">Description:</h4>
-            <p className="text-gray-700">{error.content}</p>
+          <div className="border-l-4 border-emerald-500 pl-4">
+            <h4 className="text-lg font-medium text-emerald-500">Content:</h4>
+            <p className="text-gray-800 text-lg">{error.content}</p>
           </div>
         )}
   
         {error.severity && (
-          <div>
-            <h4 className="text-lg font-medium text-gray-800">Severity:</h4>
-            <p className="text-gray-700">{error.severity}</p>
+          <div className="border-l-4 border-red-500 pl-4">
+            <h4 className="text-lg font-medium text-red-500">Severity:</h4>
+            <p className= "text-gray-800 text-lg ">{error.severity}</p>
           </div>
         )}
   
-        {error.affectedComponents?.length > 0 && (
-          <div>
-            <h4 className="text-lg font-medium text-gray-800">Affected Components:</h4>
-            <p className="text-gray-700">{error.affectedComponents.join(", ")}</p>
-          </div>
-        )}
+      {error.affectedComponents && error.affectedComponents.filter(component => component.trim() !== "").length > 0 && (
+      <div className="border-l-4 border-blue-500 pl-4">
+        <h4 className="text-lg font-medium text-blue-500">Affected Components:</h4>
+        <p className="text-gray-800 text-lg">{error.affectedComponents.filter(component => component.trim() !== "").join(", ")}</p>
+      </div>
+      )}
+
+
   
         {error.solution && (
-          <div>
-            <h4 className="text-lg font-medium text-gray-800">Approach:</h4>
-            <p className="text-gray-700">{error.solution}</p>
+          <div className="border-l-4 border-teal-500 pl-4">
+            <h4 className="text-lg font-medium text-teal-500">Approach:</h4>
+            <p className="text-gray-800 text-lg">{error.solution}</p>
           </div>
         )}
       </div>
     </div>
   );
+  
 }  
