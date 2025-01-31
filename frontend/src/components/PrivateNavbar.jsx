@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Logo from './Logo';
 import 'font-awesome/css/font-awesome.min.css';
+import { logout } from '../services/logoutService';
 
 
 export default function PrivateNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -43,9 +45,12 @@ export default function PrivateNavbar() {
           <a href="/profile" className="text-gray-800 hover:text-gray-600">
             PROFILE
           </a>
-          <a href="/logout" className="text-gray-800 hover:text-gray-600">
+          <button 
+            onClick={() => setShowLogoutModal(true)} 
+            className="text-gray-800 hover:text-gray-600"
+          >
             LOGOUT
-          </a>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -100,15 +105,23 @@ export default function PrivateNavbar() {
           >
             Profile
           </a>
-          <a
-            href="/logout"
-            className="block py-2 text-gray-800 hover:text-gray-600"
-            onClick={() => setIsOpen(false)}
-          >
-            Logout
-          </a>
+          <button className="block w-full text-left py-2 text-gray-800 hover:text-gray-600" onClick={() => { setIsOpen(false); setShowLogoutModal(true); }}>Logout</button>
         </div>
       )}
+
+{showLogoutModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Confirm Logout</h2>
+            <p>Are you sure you want to log out?</p>
+            <div className="mt-4 flex justify-end space-x-4">
+              <button className="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded" onClick={() => setShowLogoutModal(false)}>Cancel</button>
+              <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" onClick={logout}>Logout</button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </nav>
   );
 }
