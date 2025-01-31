@@ -16,10 +16,11 @@ export default function ErrorForm() {
 
   const [isFillingForm, setIsFillingForm] = useState(false);
   const navigate = useNavigate();
+  const userId = authService.getUserIdFromToken();
 
 
   useEffect(() => {
-    const userId = authService.getUserIdFromToken();
+
     if (userId) {
       setFormData((prevData) => ({
         ...prevData,
@@ -37,27 +38,44 @@ export default function ErrorForm() {
   // Save the form data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:8080/issue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
-        alert("Issue created successfully!");
-        setIsFillingForm(false);
-        console.log(data)
-        navigate("/home"); 
-      } else {
+  
+      if (!response.ok) {
         alert("Failed to create the issue.");
+        return; 
       }
+
+
+      const scoreUpdateResponse = await fetch(`http://localhost:8082/user/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ increaseBy: 10 })
+      });
+  
+      if (!scoreUpdateResponse.ok) {
+        alert("Failed to update the user score.");
+        return; 
+      }
+  
+
+  
+      alert("Issue created and score updated successfully!");
+      navigate("/home");
+  
     } catch (error) {
       console.error("Error saving data:", error);
       alert("An error occurred while saving.");
     }
   };
+  
 
 
   // Go Back Handler
